@@ -6,45 +6,29 @@ include('keys_salts.php');
 
 $error='';
 
-$issuer='';
-$recipient='';
-$description='';
-$amount='';
-$other='';
-$addr='';
+
+// create an array of the urlencoded variables, also construct the GET query string, and the concatenated invoice
+$enc=array();
+$querystrng='';
+$concatenated='';
+if ($_POST) {
+foreach ($_POST as $key => $value) {$enc[$key]=urlencode($value);$querystring.='&'.$key.'='.$value;$concatenated.=$value;}
+}// end if ($_POST) 
 
 
-if (isset($_POST['issuer'])) {$issuer=urlencode($_POST['issuer']);}
-if (isset($_POST['recipient'])) {$recipient=urlencode($_POST['recipient']);}
-if (isset($_POST['description'])) {$product=urlencode($_POST['description']);}
-if (isset($_POST['amount'])) {$amount=urlencode($_POST['amount']);}
-if (isset($_POST['other'])) {$other=urlencode($_POST['other']);}
-if (isset($_POST['addr'])) {$addr=urlencode($_POST['addr']);}
 
-if (!is_numeric($amount)) {$error.='<p>Please enter a number for the amount.</p>';}
+if (!is_numeric($_POST['amount'])) {$error.='<p>Please enter a number for the amount.</p>';}
+if (empty($_POST['addr'])) {$error.='<p>Please enter valid Dash address where you would like to receive your Dash.</p>';}
 
-$salted=INVOICE_HASH_SALT.$issuer.$recipient.$description.$amount.$other.$addr;
+$salted=INVOICE_HASH_SALT.$concatenated;
 $invoice_hash=hash('sha256',$salted);
+$querystring='?inv_hash='.$invoice_hash.$querystring;
 
 
+if (!$error) {$url='index.php'.$querystring;} else {$url='index.php';}
 
 
-$q='getreceivedbyaddress';
-$path='http://chainz.cryptoid.info/dash/api.dws?key='.CRYPTOID_API_KEY.'&q='.$q.'&a='.$addr;
-
-
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_URL, $path);
-$result = curl_exec($ch);
-curl_close($ch);
-if ($result === false) {throw new Exception('Could not get reply: ' . curl_error($ch));}
-$result = json_decode($result, true);
-
-$invoice_url='index.php?inv_hash='.$invoice_hash.'&issuer='.$issuer.'&recipient='.$recipient.'&description='.$description.'&amount='.$amount.'&other='.$other.'&addr='.$addr;
-
-
-header("location: $invoice_url");
+header("location: $url");
 
 
 ?>
