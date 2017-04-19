@@ -12,7 +12,11 @@ $enc=array();
 $querystrng='';
 $concatenated='';
 if ($_POST) {
-foreach ($_POST as $key => $value) {$enc[$key]=urlencode($value);$querystring.='&'.$key.'='.$value;$concatenated.=$value;}
+foreach ($_POST as $key => $value) {
+	$value = strip_tags($value);
+	$enc[$key]=urlencode($value);
+	$querystring.='&'.$key.'='.$value;
+	$concatenated.=$value;}
 }// end if ($_POST) 
 
 
