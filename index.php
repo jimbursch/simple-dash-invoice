@@ -44,8 +44,8 @@ if ($dec['description']) {echo '<br />For: '.$dec['description'];}
 if ($dec['amount']) {echo '<br />Amount: '.number_format($dec['amount'],3).' Dash';}
 if ($dec['other']) {echo '<br />Other: '.$dec['other'];}
 echo '<p>Please send the requested amount of Dash to the address below:</p>';
-echo '<img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data='.$dec['addr'].'" />';
-echo'<br />'.$dec['addr'];
+echo '<img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=dash:'.$dec['addr'].'" />';
+echo'<br />dash:'.$dec['addr'];
 
 echo '<hr>';
 
@@ -83,7 +83,7 @@ echo '<br />Description (product):<br />';
 echo '<input type="text" name="description" value="" />';
 echo '<br />Other:<br />';
 echo '<input type="text" name="other" value="" />';
-echo '<br />Amount:<br />';
+echo '<br />Amount(Dash):<br />';
 echo '<input type="text" name="amount" value="0" />';
 echo '<br />Dash address*:<br />';
 echo '<input type="text" name="addr" value="" />';
