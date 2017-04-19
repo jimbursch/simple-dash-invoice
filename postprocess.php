@@ -29,7 +29,7 @@ $invoice_hash=hash('sha256',$salted);
 $querystring='?inv_hash='.$invoice_hash.$querystring;
 
 
-if (!$error) {$url='index.php'.$querystring;} else {$url='index.php';}
+if (!$error) {$url='index.php'.$querystring;} else {$url='index.php';$_SESSION['message']=$error;}
 
 
 header("location: $url");
