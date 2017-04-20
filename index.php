@@ -76,6 +76,8 @@ echo '<p>'.$status.'<br />'.number_format($recd,3).' Dash has been received.</p>
 $url=$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
 echo '<p><form method="post" action="'.$url.'"><button type="submit">Recheck status (refresh)</button></form></p>';
 
+echo '<p>Invoice ID: '.substr($invoice_hash,0,8).'</p>';
+
 }// end if ($invoice_hash)
 
 else {
@@ -104,7 +106,7 @@ echo '<p>* Your Dash receiving address is the only field that is required. We do
 
 echo '<hr>';
 
-echo '<a href="index.php">Create invoice</a> | <a href="https://github.com/jimbursch/simple-dash-invoice">GitHub</a> | <a href="https://fundchan.com/jimbursch">Contact</a> | <a href="http://jimbursch.com/simple-dash-invoice/index.php?inv_hash=5a0a0ed5f0bc9ede49a996f55a73714972b067be96be49b0e7b9b43a71ae2645&issuer=Jim%20Bursch&recipient=You!&description=Tip%20for%20creating%20the%20Simple%20Dash%20Invoice&other=&amount=0&addr=Xfh48kkftKnvwPRwPSponzUE2zcMzrHgWj">Tip</a>';
+echo '<a href="index.php">Create invoice</a> | <a href="https://github.com/jimbursch/simple-dash-invoice">GitHub</a> | <a href="https://fundchan.com/jimbursch">Contact</a> | <a href="https://jimbursch.com/simple-dash-invoice/index.php?inv_hash=5a0a0ed5f0bc9ede49a996f55a73714972b067be96be49b0e7b9b43a71ae2645&issuer=Jim%20Bursch&recipient=You!&description=Tip%20for%20creating%20the%20Simple%20Dash%20Invoice&other=&amount=0&addr=Xfh48kkftKnvwPRwPSponzUE2zcMzrHgWj">Tip</a>';
 
 
 echo '</html>';
