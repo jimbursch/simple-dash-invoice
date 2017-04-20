@@ -15,4 +15,8 @@ When a customer views the invoice, the invoice hash is checked for authenticity 
 If the Dash address has received funds equal to or greater than the amount of the invoice, the invoice is marked paid.
 
 To check the status of payment, simply reload the invoice page.
+
+live prototype:
+
+http://jimbursch.com/simple-dash-invoice/
  
