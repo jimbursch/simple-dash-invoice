@@ -34,7 +34,7 @@ echo '</head>';
 
 echo '<h1>Simple Dash Invoice</h1>';
 
-if (isset($_SESSION['message'])) {echo 'test'.$_SESSION['message'];unset($_SESSION['message']);}
+if (isset($_SESSION['message'])) {echo $_SESSION['message'];unset($_SESSION['message']);}
 
 
 if ($invoice_hash) {

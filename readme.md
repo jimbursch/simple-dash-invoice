@@ -18,5 +18,5 @@ To check the status of payment, simply reload the invoice page.
 
 live prototype:
 
-http://jimbursch.com/simple-dash-invoice/
+https://jimbursch.com/simple-dash-invoice/
  
