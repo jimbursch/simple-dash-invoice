@@ -45,11 +45,13 @@ if ($dec['recipient']) {echo '<br />To: '.$dec['recipient'];}
 if ($dec['description']) {echo '<br />For: '.$dec['description'];}
 if ($dec['amount']) {echo '<br />Amount: '.number_format($dec['amount'],3).' Dash';}
 if ($dec['other']) {echo '<br />Other: '.$dec['other'];}
-echo '<p>Please send the requested amount of Dash to the address below:</p>';
+echo '<p>Please send your Dash payment to the address below:</p>';
 echo '<img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=dash:'.$dec['addr'].'" />';
 echo'<br />dash:'.$dec['addr'];
 
 echo '<hr>';
+
+echo '<h2>Payment status</h2>';
 
 $q='getreceivedbyaddress';
 $path='http://chainz.cryptoid.info/dash/api.dws?key='.CRYPTOID_API_KEY.'&q='.$q.'&a='.$dec['addr'];
@@ -71,6 +73,8 @@ if ($dec['amount']) {
 
 echo '<p>'.$status.'<br />'.number_format($recd,3).' Dash has been received.</p>';
 
+$url=$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+echo '<p><form method="post" action="'.$url.'"><button type="submit">Recheck status (refresh)</button></form></p>';
 
 }// end if ($invoice_hash)
 
