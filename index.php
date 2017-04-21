@@ -24,9 +24,11 @@ if ($_GET) {
 }// end if ($_GET) 
 
 
-echo '<!DOCTYPE html>';
-echo '<html>';
+echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN" "http://www.w3.org/TR/xhtm-basic/xhtml-basic11.dtd">';
+echo '<html xmlns="http://www.w3.org/1999/xhtml">';
 echo '<head>';
+echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />';
+echo '<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />';
 echo '<title>Simple Dash Invoice</title>';
 echo '</head>';
 
