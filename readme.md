@@ -1,3 +1,5 @@
+#Simple Dash Invoice
+
 To create a very simple Dash invoice:
 
 - mannually enter a Dash address that has never received funds
