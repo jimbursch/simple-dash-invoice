@@ -1,4 +1,4 @@
-#Simple Dash Invoice
+# Simple Dash Invoice
 
 To create a very simple Dash invoice:
 
