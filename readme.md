@@ -4,7 +4,6 @@ Working prototype: https://jimbursch.com/simple-dash-invoice/
 
 This is a very simple invoicing application for the Dash cryptocurrency written in PHP. It is simple because:
 
-- it currently is only 3 files to upload and only 1 file needs to be modified to get it working.
 - no database is required.
 - it does not use javascript.
 - all variables are passed to the invoice in the url.
