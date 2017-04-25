@@ -4,7 +4,7 @@ session_start();
 
 
 // ideally for security purposes this include should reside outside the web directory. IF you move it, this include needs to be updated with the new location.
-include('keys_salts.php');
+include('../inc/keys_salts.php');
 
 $error='';
 
