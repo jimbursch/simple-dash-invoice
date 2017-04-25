@@ -1,6 +1,6 @@
 # Simple Dash Invoice
 
-Working prototype: https://jimbursch.com/simple-dash-invoice/
+Working prototype: https://simple-dash-invoice.jimbursch.com
 
 This is a very simple invoicing application for the Dash cryptocurrency written in PHP. It is simple because:
 
@@ -12,8 +12,6 @@ This is a very simple invoicing application for the Dash cryptocurrency written 
 ## DISCLAIMER
 
 This is a SIMPLE invoicing app, which means that it should NOT be considered secure and it could be manipulated and spoofed. Out of the box, this application should only be used for small amounts between known users. DO NOT use this for large amounts or users who you do not know. 
-
-Currently the index.php file functions to both, create an invoice and view an invoice. In the next version, these functions will be separated so that the create-invoice function can be better secured behind some sort of login.
 
 ## Dependencies
 
