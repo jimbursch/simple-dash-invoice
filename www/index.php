@@ -2,7 +2,7 @@
 
 session_start();
 
-include('keys_salts.php');
+include('../inc/keys_salts.php');
 
 $invoice_hash='';
 
@@ -41,66 +41,49 @@ if (isset($_SESSION['message'])) {echo $_SESSION['message'];unset($_SESSION['mes
 
 if ($invoice_hash) {
 
+	if ($dec['issuer']) {echo '<br />From: '.$dec['issuer'];}
+	if ($dec['recipient']) {echo '<br />To: '.$dec['recipient'];}
+	if ($dec['description']) {echo '<br />For: '.$dec['description'];}
+	if ($dec['amount']) {echo '<br />Amount: '.number_format($dec['amount'],3).' Dash';}
+	if ($dec['other']) {echo '<br />Other: '.$dec['other'];}
+	echo '<p>Please send your Dash payment to the address below:</p>';
+	echo '<img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=dash:'.$dec['addr'].'" />';
+	echo'<br />dash:'.$dec['addr'];
 
-if ($dec['issuer']) {echo '<br />From: '.$dec['issuer'];}
-if ($dec['recipient']) {echo '<br />To: '.$dec['recipient'];}
-if ($dec['description']) {echo '<br />For: '.$dec['description'];}
-if ($dec['amount']) {echo '<br />Amount: '.number_format($dec['amount'],3).' Dash';}
-if ($dec['other']) {echo '<br />Other: '.$dec['other'];}
-echo '<p>Please send your Dash payment to the address below:</p>';
-echo '<img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=dash:'.$dec['addr'].'" />';
-echo'<br />dash:'.$dec['addr'];
+	echo '<hr>';
 
-echo '<hr>';
+	echo '<h2>Payment status</h2>';
 
-echo '<h2>Payment status</h2>';
+	$q='getreceivedbyaddress';
+	$path='http://chainz.cryptoid.info/dash/api.dws?key='.CRYPTOID_API_KEY.'&q='.$q.'&a='.$dec['addr'];
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_URL, $path);
+	$result = curl_exec($ch);
+	curl_close($ch);
+	if ($result === false) {throw new Exception('Could not get reply: ' . curl_error($ch));}
+	$recd = json_decode($result, true);
 
-$q='getreceivedbyaddress';
-$path='http://chainz.cryptoid.info/dash/api.dws?key='.CRYPTOID_API_KEY.'&q='.$q.'&a='.$dec['addr'];
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_URL, $path);
-$result = curl_exec($ch);
-curl_close($ch);
-if ($result === false) {throw new Exception('Could not get reply: ' . curl_error($ch));}
-$recd = json_decode($result, true);
+	$status='';
+	if ($dec['amount']) {
+		if ($recd == $dec['amount']) {$status='Paid in full';}
+		if ($recd > $dec['amount']) {$status='Paid in excess';}
+		if ($recd > 0 && $recd < $dec['amount']) {$status='Partial payment received.';}
+		if (!$recd) {$status='No payment received.';}
+	}//end if ($dec['amount'])
 
-$status='';
-if ($dec['amount']) {
-	if ($recd == $dec['amount']) {$status='Paid in full';}
-	if ($recd > $dec['amount']) {$status='Paid in excess';}
-	if ($recd > 0 && $recd < $dec['amount']) {$status='Partial payment received.';}
-	if (!$recd) {$status='No payment received.';}
-}//end if ($dec['amount'])
+	echo '<p>'.$status.'<br />'.number_format($recd,3).' Dash has been received.</p>';
 
-echo '<p>'.$status.'<br />'.number_format($recd,3).' Dash has been received.</p>';
+	$url=$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+	echo '<p><form method="post" action="'.$url.'"><button type="submit">Recheck status (refresh)</button></form></p>';
 
-$url=$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
-echo '<p><form method="post" action="'.$url.'"><button type="submit">Recheck status (refresh)</button></form></p>';
-
-echo '<p>Invoice ID: '.substr($invoice_hash,0,8).'</p>';
+	echo '<p>Invoice ID: '.substr($invoice_hash,0,8).'</p>';
 
 }// end if ($invoice_hash)
 
 else {
 
-echo '<form method="post" action="postprocess.php">';
-echo 'Issuer (merchant):<br />';
-echo '<input type="text" name="issuer" value="" />';
-echo '<br />Recipient (customer):<br />';
-echo '<input type="text" name="recipient" value="" />';
-echo '<br />Description (product):<br />';
-echo '<input type="text" name="description" value="" />';
-echo '<br />Other:<br />';
-echo '<input type="text" name="other" value="" />';
-echo '<br />Amount(Dash):<br />';
-echo '<input type="text" name="amount" value="0" />';
-echo '<br />Dash address*:<br />';
-echo '<input type="text" name="addr" value="" />';
-echo '<br /><button type="submit">Create invoice</button>';
-echo '</form>';
-
-echo '<p>* Your Dash receiving address is the only field that is required. We do not check the validity of the address entered, so be sure that it is correct.</p>';
+	echo '<p>This is not a valid invoice.</p>'
 
 }//end else
 
@@ -108,7 +91,7 @@ echo '<p>* Your Dash receiving address is the only field that is required. We do
 
 echo '<hr>';
 
-echo '<a href="index.php">Create invoice</a> | <a href="https://github.com/jimbursch/simple-dash-invoice">GitHub</a> | <a href="https://fundchan.com/jimbursch">Contact</a> | <a href="https://jimbursch.com/simple-dash-invoice/index.php?inv_hash=5a0a0ed5f0bc9ede49a996f55a73714972b067be96be49b0e7b9b43a71ae2645&issuer=Jim%20Bursch&recipient=You!&description=Tip%20for%20creating%20the%20Simple%20Dash%20Invoice&other=&amount=0&addr=Xfh48kkftKnvwPRwPSponzUE2zcMzrHgWj">Tip</a>';
+echo '<a href="create_invoice.php">Create invoice</a> | <a href="https://github.com/jimbursch/simple-dash-invoice">GitHub</a> | <a href="https://fundchan.com/jimbursch">Contact</a> | <a href="https://jimbursch.com/simple-dash-invoice/index.php?inv_hash=5a0a0ed5f0bc9ede49a996f55a73714972b067be96be49b0e7b9b43a71ae2645&issuer=Jim%20Bursch&recipient=You!&description=Tip%20for%20creating%20the%20Simple%20Dash%20Invoice&other=&amount=0&addr=Xfh48kkftKnvwPRwPSponzUE2zcMzrHgWj">Tip</a>';
 
 
 echo '</html>';
