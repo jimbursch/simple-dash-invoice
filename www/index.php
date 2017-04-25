@@ -83,7 +83,7 @@ if ($invoice_hash) {
 
 else {
 
-	echo '<p>This is not a valid invoice.</p>'
+	echo '<p>This is not a valid invoice.</p>';
 
 }//end else
 
