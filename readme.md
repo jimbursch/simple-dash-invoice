@@ -1,5 +1,3 @@
-this is another test.
-
 # Simple Dash Invoice
 
 Working prototype: https://simple-dash-invoice.jimbursch.com
