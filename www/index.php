@@ -83,7 +83,7 @@ if ($invoice_hash) {
 
 else {
 
-	echo '<p>This is not a valid invoice.</p>';
+	echo '<p>Would you like to <a href="create_invoice.php">create an invoice?</a></p>';
 
 }//end else
 
